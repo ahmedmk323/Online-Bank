@@ -175,7 +175,48 @@
             context.fillStyle = '#FFFFFF';
             context.fillRect(0, 0, canvas.width, canvas.height);
         }
-
+        //amm256
+        //03/27/2022
+        function increasePaddleSpeed(){
+            if (leftScore > rightScore){
+                rightPaddle.s += (0.5);
+                if (leftPaddle.s <= 0){
+                    leftPaddle.s= 1;
+                }
+                else{
+                    leftPaddle.s -= 0.2;
+                }
+            }
+            else if(rightScore > leftScore){
+                leftPaddle.s += (0.5);
+                if (rightPaddle.s <= 0){
+                    rightPaddle.s=  1;
+                }
+                else{
+                    rightPaddle.s -=  0.2;
+                }
+            }
+            else{
+                rightPaddle.s=5;
+                leftPaddle.s=5;
+            }
+        }
+        
+        //amm256
+        //03/27/2022
+        function IncreaseWinnerDecreaseLoser(winnerPaddle, loserPaddle){
+            if (leftScore == rightScore){
+                winnerPaddle.h= 100;
+                loserPaddle.h= 100;
+                return;
+            }
+            if(winnerPaddle.h < canvas.height){
+                winnerPaddle.h+=20;
+            }
+            if(loserPaddle.h > 10){
+                loserPaddle.h -=10;
+            }
+        }   
         // Main draw loop
         function draw() {
             erase();
@@ -197,7 +238,7 @@
             ball.y += ball.sY;
             // Bounce the ball off the top/bottom
             if (ball.y < 0 || ball.y + ball.h > canvas.height) {
-                ball.sY *= -1;
+                ball.sY *= -1;               
             }
             // Don't let the paddles go off screen
             [leftPaddle, rightPaddle].forEach(function (paddle) {
@@ -222,10 +263,18 @@
             // Score if the ball goes past a paddle
             if (ball.x < leftPaddle.x) {
                 rightScore++;
+                //amm256
+                //03/27/2022
+                IncreaseWinnerDecreaseLoser(rightPaddle,leftPaddle);
+                increasePaddleSpeed();
                 resetBall();
                 ball.sX *= -1;
             } else if (ball.x + ball.w > rightPaddle.x + rightPaddle.w) {
                 leftScore++;
+                //amm256
+                //03/27/2022
+                IncreaseWinnerDecreaseLoser(leftPaddle,rightPaddle);
+                increasePaddleSpeed();
                 resetBall();
                 ball.sX *= -1;
             }
