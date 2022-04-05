@@ -4,11 +4,11 @@ require(__DIR__ . "/../../partials/nav.php");
 <form onsubmit="return validate(this)" method="POST">
     <div>
         <label for="email">Email/Username</label>
-        <input type="text" name="email" required />
+        <input type="text" name="email"/>
     </div>
     <div>
         <label for="pw">Password</label>
-        <input type="password" id="pw" name="password" required minlength="8" />
+        <input type="password" id="pw" name="password"/>
     </div>
     <input type="submit" value="Login" />
 </form>
@@ -16,10 +16,44 @@ require(__DIR__ . "/../../partials/nav.php");
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
+        
+        let isValid= true;
+        let email= form.email.value;
+        const password= form.password.value;
+        
+        if (!email){
+            flash("Email must not be empty (JS)" , "warning");
+            isValid= false;
+        }
+        // Check for valid email
+        if (email.includes("@")){
+            email= email.trim();
+            const REGEX= /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!(REGEX.test(email))){
+                flash("Invalid email address (JS)", "warning");
+                isValid= false;
+            }
+        }
+        else{
+            const REGEX_2=/^[a-z0-9_-]{3,16}$/;
+            if (!(REGEX_2.test(email))){
+                flash("Invalid username (JS)", "warning");
+                isValid= false;
+            }
+        }
 
+        if(!password){
+            flash("Password must not be empty (JS)", "warning");
+            return false;
+        }
+
+        if(password.length < 8){
+            flash("Password is to short (JS)", "warning");
+            isValid= false;
+        }
         //TODO update clientside validation to check if it should
         //valid email or username
-        return true;
+        return isValid;
     }
 </script>
 <?php
