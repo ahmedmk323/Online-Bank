@@ -17,24 +17,36 @@
 ### Proposal Checklist and Evidence
 
 - Milestone 1
-    - [ ] \(mm/dd/yyyy of completion) User will be able to register a new account
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) User will be able to login to their account (given they enter the correct credentials)
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Feature Title User will be able to logout
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Basic security rules implemented
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Basic Roles implemented
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Site should have basic styles/theme applied; everything should be styled
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Any output messages/errors should be “user friendly”
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) User will be able to see their profile
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) User will be able to edit their profile
-        -  Link to related .md file: [Link Name](link url)
+    - [x] \(02/23/2022) User will be able to register a new account
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Register](https://amm256-prod.herokuapp.com/Project/register.php)
+    - [x] \(02/23/2022) User will be able to login to their account (given they enter the correct credentials)
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Login](https://amm256-prod.herokuapp.com/Project/login.php)
+    - [x] \(02/23/2022) Feature Title User will be able to logout
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Logout](https://amm256-prod.herokuapp.com/Project/logout.php)
+    - [x] \(04/02/2022) Basic security rules implemented
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+    - [x] \(04/03/2022) Basic Roles implemented
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Create_Role](https://amm256-prod.herokuapp.com/Project/admin/create_role.php)  
+        -  [Assign_Roles](https://amm256-prod.herokuapp.com/Project/admin/assign_roles.php)  
+        -  [List_Role](https://amm256-prod.herokuapp.com/Project/admin/list_roles.php)  
+    - [x] \(04/04/2022) Site should have basic styles/theme applied; everything should be styled
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Home](https://amm256-prod.herokuapp.com/Project/home.php)
+        -  [Styles](https://amm256-prod.herokuapp.com/Project/styles.css)
+    - [x] \(03/13/2022) Any output messages/errors should be “user friendly”
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Logout](https://amm256-prod.herokuapp.com/Project/logout.php)
+    - [x] \(04/02/2022) User will be able to see their profile
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+    - [x] \(04/02/2022) User will be able to edit their profile
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Profile](https://amm256-prod.herokuapp.com/Project/profile.php)
 - Milestone 2
   - (duplicate template here for Milestone 1 features)
 - Milestone 3
