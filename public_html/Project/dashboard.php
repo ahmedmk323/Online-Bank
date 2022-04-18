@@ -17,7 +17,7 @@ if (!is_logged_in()) {
     </ul>
 </nav>
 
-<script>
+<!-- <script>
     const nav= document.getElementsByTagName("nav")[0];
     nav.remove();
-</script>
+</script> -->
