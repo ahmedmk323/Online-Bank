@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS `Accounts`(
     `created` TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
     `modified` TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY(`user_id`) REFERENCES Users(`id`),
-    CHECK (`balance` >= 0 AND LENGTH(`account_number`) = 12)
+    CHECK (LENGTH(`account_number`) = 12)
 )
