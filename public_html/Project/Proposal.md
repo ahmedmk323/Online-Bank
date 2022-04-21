@@ -47,8 +47,30 @@
     - [x] \(04/02/2022) User will be able to edit their profile
         -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
         -  [Profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+
 - Milestone 2
-  - (duplicate template here for Milestone 1 features)
+  - [x] \(04/18/2022) Create the Accounts table (id, account_number [unique, always 12 characters], user_id, balance (default 0), account_type, created, modified)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Account_Table](https://amm256-prod.herokuapp.com/Project/sql/006_create_table_accounts.sql)
+  - [x] \(04/18/2022) Project Setup Steps
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [system_user](https://amm256-prod.herokuapp.com/Project/sql/008_insert_sys_user.sql)
+    -  [world_account](https://amm256-prod.herokuapp.com/Project/sql/009_insert_world_account.sql)
+  - [x] \(04/18/2022) Create the Transactions table (see reference at end of document)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Transactions_Table](https://amm256-prod.herokuapp.com/Project/sql/007_create_table_transactions.sql)
+  - [x] \(04/18/2022) Dashboard page
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Dashboard](https://amm256-prod.herokuapp.com/Project/profile.php)
+  - [x] \(04/20/2022) User will be able to create a checking account
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [create](https://amm256-prod.herokuapp.com/Project/create_account.php)
+  - [ ] \(mm/dd//yyyy) User will be able to list their accounts
+    -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd//yyyy) User will be able to click an account for more information (a.k.a Transaction History page)
+    -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd//yyyy) User will be able to deposit/withdraw from their account(s)
+    -  Link to related .md file: [Link Name](link url)
 - Milestone 3
   - (duplicate template here for Milestone 1 features)
 - Milestone 4
