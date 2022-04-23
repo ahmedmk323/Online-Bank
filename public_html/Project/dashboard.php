@@ -9,7 +9,7 @@ if (!is_logged_in()) {
 <nav>
     <ul>
         <li><a href="<?php echo get_url('create_account.php');?>">Create Account</a></li>
-        <li><a href="#">My Accounts</a></li>
+        <li><a href="<?php echo get_url("accounts.php")?>">My Accounts</a></li>
         <li><a href="#">Deposit</a></li>
         <li><a href="#">Withdraw</a></li>
         <li><a href="#">Transfer</a></li>
@@ -17,7 +17,7 @@ if (!is_logged_in()) {
     </ul>
 </nav>
 
-<script>
+<!-- <script>
     const nav= document.getElementsByTagName("nav")[0];
     nav.remove();
-</script>
+</script> -->

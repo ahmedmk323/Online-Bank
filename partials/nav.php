@@ -31,6 +31,7 @@ session_start();
     <ul>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
+            <li><a href="<?php echo get_url('dashboard.php');?>">Dashboard</a></li>
             <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
@@ -44,7 +45,6 @@ session_start();
         <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('logout.php'); ?>">Logout</a></li>
-            <li><a href="<?php echo get_url('dashboard.php');?>">Dashboard</a></li>
         <?php endif; ?>
             
     </ul>
