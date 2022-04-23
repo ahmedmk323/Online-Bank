@@ -15,7 +15,7 @@ function deposit($id, $amount){
         
         $ids=array(1,$id);
         foreach($ids as $key => $id){
-            $query= "UPDATE Accounts set balance = (SELECT IFNULL(SUM(balance_change), 0) FROM Transactions where Transactions.account_src = :account_id) WHERE :account_id";
+            $query= "UPDATE Accounts set balance = (SELECT IFNULL(SUM(balance_change), 0) FROM Transactions where Transactions.account_src = :account_id) WHERE id = :account_id";
             $stmt=$db->prepare($query);
             $stmt->execute([":account_id" =>$id,":account_id" =>$id]);
             
@@ -23,12 +23,14 @@ function deposit($id, $amount){
             $stmt=$db->prepare($query);
             $stmt->execute([":account_id" =>$id]);
 
-            $result= $stmt->fetch(PDO::FETCH_ASSOC);
+            $result= $stmt->fetch(PDO::FETCH_ASSOC); 
             $amount= $result["balance"];
-            
-            $query= "UPDATE Transactions SET expected_total = :total WHERE id = :id";
+            $query= "UPDATE Transactions SET expected_total = :total WHERE account_src = :src AND account_dest = :dest";
             $stmt=$db->prepare($query);
-            $stmt->execute([":total"=> $amount, ":id" =>$id]);
+            if ($id == 1) 
+                $dest= $ids[1];
+            else $dest = 1;
+            $stmt->execute([":total"=> $amount, ":src" =>$id, ":dest" => $dest]);
         }
     }
     catch(PDOException $e){
@@ -73,7 +75,7 @@ function createAcc($type=""){
         deposit($last_id,$balance);
         
         flash("Account created Successfully", "success");
-        //die(header("Location: accounts.php"));
+        die(header("Location: accounts.php"));
     }
     catch(PDOException $e){
         return flash("Error Failed to create the account", "danger");
