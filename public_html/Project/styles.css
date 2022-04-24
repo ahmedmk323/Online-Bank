@@ -63,5 +63,24 @@ input[value=Toggle]{
 table{
     text-align: center;
     font-size: large;
+    border-collapse: collapse;
+    margin: 25px 0;
     
+}
+tr{
+    max-width: auto;
+}
+thead + tr{
+    background-color: white;
+}
+tr:nth-child(even){
+    background-color: white;
+}
+tr:nth-child(odd){
+    background-color: burlywood;
+}
+td, th{
+    padding: 2% 2%;
+    text-align: center;
+    min-width: 80px;
 }
