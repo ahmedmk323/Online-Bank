@@ -5,22 +5,6 @@ if (!is_logged_in()) {
     die(header("Location: login.php"));
 }
 
-function getAccounts(){
-    $db= getDB();
-    $user_id= get_user_id();
-    $query= "SELECT * FROM Accounts WHERE user_id = :id LIMIT 5";
-    try{
-        $stmt= $db->prepare($query);
-        $stmt->bindParam(":id", $user_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result= $stmt->fetchAll(PDO::FETCH_NAMED);        
-    }
-    catch(PDOException $e){
-        return flash("No Accounts are found");
-    }
-    return $result;
-}
-
 $results= getAccounts();
 if(!$results){
     echo "<center><h2>No accounts are found</h2></center>";
