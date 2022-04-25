@@ -66,9 +66,9 @@ function withdraw($id, $amount, $msg= ""){
     $stmt=$db->prepare($query);
     $col_ids=array();
     try{
-        $stmt->execute([":src" => 1 , ":dest" => $id, ":balance_c" => $amount, ":transcation_type" => "deposit",":msg"=> $msg, ":expected_total" =>0]);
+        $stmt->execute([":src" => 1 , ":dest" => $id, ":balance_c" => $amount, ":transcation_type" => "withdraw",":msg"=> $msg, ":expected_total" =>0]);
         array_push($col_ids,$db->lastInsertId());
-        $stmt->execute([":src" => $id , ":dest" => 1, ":balance_c" => -$amount, ":transcation_type" => "deposit","msg"=> $msg, ":expected_total" =>0]);
+        $stmt->execute([":src" => $id , ":dest" => 1, ":balance_c" => -$amount, ":transcation_type" => "withdraw","msg"=> $msg, ":expected_total" =>0]);
         array_push($col_ids,$db->lastInsertId());
         $ids=array(1,$id);
 
