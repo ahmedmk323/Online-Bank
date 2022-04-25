@@ -4,37 +4,6 @@ if (!is_logged_in()) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: login.php"));
 }
-function deposit($id, $amount){
-    global $db;
-    $query= "INSERT INTO Transactions (account_src,account_dest,balance_change,transaction_type,expected_total) VALUES 
-    (:src, :dest, :balance_c,:transcation_type, :expected_total)"; 
-    $stmt=$db->prepare($query);
-    try{
-        $stmt->execute([":src" => 1 , ":dest" => $id, ":balance_c" => -$amount, ":transcation_type" => "deposit", ":expected_total" =>0]);
-        $stmt->execute([":src" => $id , ":dest" => 1, ":balance_c" => $amount, ":transcation_type" => "deposit", ":expected_total" =>0]);
-        
-        $ids=array(1,$id);
-        foreach($ids as $key => $id){
-            $query= "UPDATE Accounts set balance = (SELECT IFNULL(SUM(balance_change), 0) FROM Transactions where Transactions.account_src = :account_id) WHERE :account_id";
-            $stmt=$db->prepare($query);
-            $stmt->execute([":account_id" =>$id,":account_id" =>$id]);
-            
-            $query="SELECT balance FROM Accounts where id = :account_id";
-            $stmt=$db->prepare($query);
-            $stmt->execute([":account_id" =>$id]);
-
-            $result= $stmt->fetch(PDO::FETCH_ASSOC);
-            $amount= $result["balance"];
-            
-            $query= "UPDATE Transactions SET expected_total = :total WHERE id = :id";
-            $stmt=$db->prepare($query);
-            $stmt->execute([":total"=> $amount, ":id" =>$id]);
-        }
-    }
-    catch(PDOException $e){
-        return var_export($e->errorInfo);
-    }
-}
 
 function createAcc($type=""){
     if(isset($_POST["type"]) && isset($_POST["deposit_default"])){
@@ -73,7 +42,7 @@ function createAcc($type=""){
         deposit($last_id,$balance);
         
         flash("Account created Successfully", "success");
-        //die(header("Location: accounts.php"));
+        die(header("Location: accounts.php"));
     }
     catch(PDOException $e){
         return flash("Error Failed to create the account", "danger");

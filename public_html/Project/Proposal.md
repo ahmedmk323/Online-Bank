@@ -65,12 +65,17 @@
   - [x] \(04/20/2022) User will be able to create a checking account
     -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
     -  [create](https://amm256-prod.herokuapp.com/Project/create_account.php)
-  - [ ] \(mm/dd//yyyy) User will be able to list their accounts
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(mm/dd//yyyy) User will be able to click an account for more information (a.k.a Transaction History page)
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(mm/dd//yyyy) User will be able to deposit/withdraw from their account(s)
-    -  Link to related .md file: [Link Name](link url)
+  - [x] \(04/23/2022) User will be able to list their accounts
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [List Accounts](https://amm256-prod.herokuapp.com/Project/accounts.php)
+  - [x] \(04/23/2022) User will be able to click an account for more information (a.k.a Transaction History page)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Transaction History](https://amm256-prod.herokuapp.com/Project/transactions.php)
+  - [x] \(04/23/2022) User will be able to deposit/withdraw from their account(s)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Deposit](https://amm256-prod.herokuapp.com/Project/deposit.php)
+    -  [Withdraw](https://amm256-prod.herokuapp.com/Project/withdraw.php)
+
 - Milestone 3
   - (duplicate template here for Milestone 1 features)
 - Milestone 4
