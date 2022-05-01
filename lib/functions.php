@@ -95,13 +95,56 @@ function withdraw($id, $amount, $msg= ""){
         return var_export($e->errorInfo);
     }
 }
-function getAccounts(){
+
+function transfer($src_acc_id, $dest_acc_id, $amount, $msg= ""){
     $db= getDB();
-    $user_id= get_user_id();
-    $query= "SELECT * FROM Accounts WHERE user_id = :id LIMIT 5";
+    $query= "INSERT INTO Transactions (account_src,account_dest,balance_change,transaction_type,memo,expected_total) VALUES 
+    (:src, :dest, :balance_c,:transcation_type, :msg, :expected_total)"; 
+    $stmt=$db->prepare($query);
+    $col_ids=array();
     try{
+        $stmt->execute([":src" => $src_acc_id, ":dest" => $dest_acc_id, ":balance_c" => -$amount, ":transcation_type" => "transfer",":msg"=> $msg, ":expected_total" =>0]);
+        array_push($col_ids,$db->lastInsertId());
+        $stmt->execute([":src" => $dest_acc_id, ":dest" => $src_acc_id, ":balance_c" => $amount, ":transcation_type" => "transfer","msg"=> $msg, ":expected_total" =>0]);
+        array_push($col_ids,$db->lastInsertId());
+        $ids=array($src_acc_id, $dest_acc_id);
+
+        foreach($ids as $key => $id){
+            $query= "UPDATE Accounts set balance = (SELECT IFNULL(SUM(balance_change), 0) FROM Transactions where Transactions.account_src = :account_id) WHERE id = :account_id";
+            $stmt=$db->prepare($query);
+            $stmt->execute([":account_id" =>$id,":account_id" =>$id]);
+            
+            $query="SELECT balance FROM Accounts where id = :account_id";
+            $stmt=$db->prepare($query);
+            $stmt->execute([":account_id" =>$id]);
+
+            $result= $stmt->fetch(PDO::FETCH_ASSOC); 
+            $amount= $result["balance"];
+            $query= "UPDATE Transactions SET expected_total = :total WHERE id = :id";
+            $stmt=$db->prepare($query);
+            $stmt->execute([":total"=> $amount, ":id"=>$col_ids[$key]]);
+        }
+    }
+    catch(PDOException $e){
+        return var_export($e->errorInfo);
+    }
+}
+/**Function to get all accounts or a single account using account id */
+function getAccounts($aid=0){
+    $db= getDB();
+    if($aid){
+        $query= "SELECT * FROM Accounts WHERE id = :id";
+        $stmt= $db->prepare($query);
+        $stmt->bindParam(":id", $aid, PDO::PARAM_INT);  
+    }
+    else{
+        $user_id= get_user_id();
+        $query= "SELECT * FROM Accounts WHERE user_id = :id LIMIT 5";
         $stmt= $db->prepare($query);
         $stmt->bindParam(":id", $user_id, PDO::PARAM_INT);
+    }
+    
+    try{
         $stmt->execute();
         $result= $stmt->fetchAll(PDO::FETCH_NAMED);        
     }
