@@ -70,13 +70,13 @@ table{
 tr{
     max-width: auto;
 }
-thead + tr{
+thead > tr{
     background-color: white;
 }
-tr:nth-child(even){
+tbody > tr:nth-child(even){
     background-color: white;
 }
-tr:nth-child(odd){
+tbody > tr:nth-child(odd){
     background-color: burlywood;
 }
 td, th{
