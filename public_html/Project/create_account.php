@@ -51,24 +51,33 @@ function createAcc($type=""){
 createAcc();
 require(__DIR__ . "/../../partials/flash.php");
 ?>
+<div class="container-fluid">
 <form method="POST" >
-    <label for="type">Type</label>
-    <select name="type" id="1" required>
-        <option value=""></option>
-        <option value="checking">Checking</option>
-        <option value="savings">Savings</option>
-    </select>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Type</span>
+        <select name="type"class="form-select" id="1" required>
+            <option value=""></option>
+            <option value="checking">Checking</option>
+            <option value="savings">Savings</option>
+        </select>
+    </div>
     <p>To open new account the minimum deposit amount is $5.</p>
     <p>Would you like to deposit $5 ?</p>
-    <input type="radio" id="deposit_1" name="deposit_default" value="yes" required>
-    <label for="deposit_1">Yes</label>
-    <input type="radio" id="deposit_2" name="deposit_default" value="no" required>
-    <label for="deposit_2">No</label><br>
+    <div class="form-check">
+        <input type="radio" class="" id="deposit_1" name="deposit_default" value="yes" required>
+        <label for="deposit_1">Yes</label>
+    </div>
+    <div class="form-check">
+        <input type="radio" id="deposit_2" name="deposit_default" value="no" required>
+        <label for="deposit_2">No</label><br>
+    </div>
     <label for="amount" id="amount">Enter amount in dollars: </label>
     <input type="number" id="amount" name="amount" required disabled min="5"><br>
     
     <input type="submit">
+    
 </form>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $(
