@@ -1,4 +1,4 @@
-html{
+body{
     background-color: aquamarine;
 }
 
@@ -29,11 +29,6 @@ li > a:hover{
 
 form{
     background-color: aliceblue;
-    border-radius: 5px;
-}
-input{
-    width: 100%;
-    height: 30px;   
 }
 
  label{
@@ -41,24 +36,6 @@ input{
     font-size: large;
 }
 
- input[type=submit]{
-    font-family: 'Arial';
-    width: 10%;
-    height: 5%;
-    color: green;
-    font-size: medium;
-    border-radius: 5px;
-}
-
-input[type=submit]:hover{
-    background-color: darkgrey;
-    color: lightgreen;
-}
-
-input[value=Toggle]{
-    width: fit-content;
-    height: fit-content;
-}
 
 table{
     text-align: center;

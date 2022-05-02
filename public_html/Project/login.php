@@ -1,17 +1,21 @@
 <?php
 require(__DIR__ . "/../../partials/nav.php");
 ?>
-<form onsubmit="return validate(this)" method="POST">
-    <div>
-        <label for="email">Email/Username</label>
-        <input type="text" name="email"/>
-    </div>
-    <div>
-        <label for="pw">Password</label>
-        <input type="password" id="pw" name="password"/>
-    </div>
-    <input type="submit" value="Login" />
-</form>
+<div class="container position-absolute top-50 start-50 translate-middle d-flex justify-content-center h-50 w-25 ">
+    <form class="p-3 rounded-2" onsubmit="return validate(this)" method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email/Username</label>
+            <input type="text" class="form-control" name="email" />
+        </div>
+        <div class="mb-3">
+            <label for="pw" class="form-label">Password</label>
+            <input type="password" class="form-control" id="pw" name="password"/>
+        </div>
+        <input type="submit" class= "btn btn-primary" value="Login" />
+    </form>
+   
+    
+</div>
 <script>
     function validate(form) {
         //TODO 1: implement JavaScript validation
@@ -99,7 +103,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         //flash("Welcome, $email");
         //TODO 4
         $db = getDB();
-        $stmt = $db->prepare("SELECT id, email, username, password from Users 
+        $stmt = $db->prepare("SELECT id, email, username, password, first_name, last_name from Users 
         where email = :email or username = :email");
         try {
             $r = $stmt->execute([":email" => $email]);
@@ -123,7 +127,11 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                         } else {
                             $_SESSION["user"]["roles"] = []; //no roles
                         }
-                        flash("Welcome, " . get_username());
+                        if(isset($_SESSION["user"]["first_name"])){
+                            flash("Welcome, " . get_user_first_name() . " ". get_user_last_name(). '!');
+                        }
+                        else
+                            flash("Welcome, " . get_username());
                         die(header("Location: home.php"));
                     } else {
                         flash("Invalid password");

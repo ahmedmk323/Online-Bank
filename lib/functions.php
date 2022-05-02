@@ -168,4 +168,6 @@ function inquiryBalance($id){
     }
     return $result;
 }
+//paginate
+require(__DIR__. "/paginate.php");
 ?>

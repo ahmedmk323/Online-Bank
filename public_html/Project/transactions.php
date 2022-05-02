@@ -40,9 +40,9 @@ if(isset($_POST["account_id"])){
     <div class="row">
         <div class="col-6">
             <form method="POST" class="border rounded w-50 p-3">
-                <div>
-                    <label for="" class="form-label">Select which account would you like to view:</label>
-                    <select name="account_id" class="form-select" required>
+                <div class="mb-3">
+                    <label for="account_id" class="form-label">Select which account would you like to view:</label>
+                    <select name="account_id" id= "account_id" class="form-select" required>
                         <option value=""></option>
                         <?php $results= getAccounts();?>
                         <?php foreach($results as $key => $value):?>
@@ -50,6 +50,23 @@ if(isset($_POST["account_id"])){
                         <?php endforeach;?>		
                     </select>
                 </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Start</span>
+                    <input type="date" class="form-control" aria-label="Start">
+                    <span class="input-group-text">End</span>
+                    <input type="date" class="form-control">                   
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Type</span> 
+                    <select name="" class="form-select">
+                        <option value=""></option>
+                        <option value="deposit">Deposit</option>
+                        <option value="ext-transfer">External transfer</option>
+                        <option value="transfer">Transfer</option>
+                        <option value="withdraw">Withdraw</option>
+                    </select>
+                </div>
+
                 <div class="mt-3">
                     <button type="submit" class="btn btn-primary"> Submit</button>
                 </div>            
@@ -111,8 +128,6 @@ if(isset($_POST["account_id"])){
 <?php endif;?>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 <style>
     body{
         background-color: aquamarine;
