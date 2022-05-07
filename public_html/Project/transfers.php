@@ -4,29 +4,59 @@ if (!is_logged_in()) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: login.php"));
 }
-if(isset($_POST["src"]) && isset($_POST["dest"]) && isset($_POST["amount"])){
-    try{
-	    $balance= inquiryBalance($_POST["src"]);
-        $balance= $balance[0]["balance"]; // Balance 
-    }
-    catch(PDOException $e){
-        var_export($e->errorInfo);
-    }
 
-    if($_POST["src"] === $_POST["dest"]){
-        flash("Can not transfer to the same account", 'warning');
+if(isset($_POST["submit"]) && $_POST["submit"] === "submit"){
+    if(isset($_POST["src"]) && isset($_POST["dest"]) && isset($_POST["amount"])){
+        try{
+            $balance= inquiryBalance($_POST["src"]);
+            $balance= $balance[0]["balance"]; // Balance 
+        }
+        catch(PDOException $e){
+            var_export($e->errorInfo);
+        }
+
+        if($_POST["src"] === $_POST["dest"]){
+            flash("Can not transfer to the same account", 'warning');
+        }
+        elseif($_POST["amount"] < 1 || $_POST["amount"] > $balance){
+            flash("Error transfering the requested amount", 'warning');
+        }
+        else{
+            try{
+                transfer($_POST["src"],$_POST["dest"], $_POST["amount"],"transfer", $_POST["memo"]);
+                flash("Amount transfered successfully, Check the Transaction page","success");
+            }
+            catch(PDOException $e){
+                var_export($e);
+            }
+        }
     }
-    elseif($_POST["amount"] < 1 || $_POST["amount"] > $balance){
-        flash("Error transfering the requested amount", 'warning');
-    }
-    else{
-		try{
-			transfer($_POST["src"],$_POST["dest"], $_POST["amount"], $_POST["memo"]);
-			flash("Amount transfered successfully, Check the Transaction page","success");
-		}
-		catch(PDOException $e){
-			var_export($e);
-		}
+    else if (isset($_POST["src"]) && isset($_POST["ln"]) && isset($_POST["external_an"]) && isset($_POST["amount"])){
+        $db= getDB();
+        $query= "SELECT Accounts.id 
+        FROM Accounts
+        WHERE Accounts.account_number LIKE :an AND Accounts.user_id IN (
+            SELECT Users.id 
+            FROM Users
+            WHERE LOWER(Users.last_name) = :ln)";
+        $stmt= $db->prepare($query);
+        $last_name= strtolower($_POST["ln"]);
+        $last_name= trim($last_name);
+        $an= '%'.$_POST["external_an"];
+        try{
+            $stmt->execute([":an" =>$an,":ln" => $last_name]);
+            $results= $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($results){
+                transfer($_POST["src"],$results[0]["id"], $_POST["amount"],"ext-transfer", $_POST["memo"]);
+                flash("Amount transfered successfully, Check the Transaction page","success");
+            }
+            else{
+                flash("No accounts associated with that receiver name or 4-digit account number", "warning");
+            } 
+        }
+        catch(PDOException $e){
+            var_export($e->errorInfo);
+        }
     }
 }
 ?>
@@ -39,6 +69,18 @@ $src_accounts= getAccounts();
 <div class="container">
     <h2 class="pb-2">Transfer</h2>
     <form style="width:80%" class="row g-2 p-3" method="POST" onsubmit="return validate_transfer(this)">
+        <div class="col-md-12">
+            <label class="col-12 form-label">Transfer type: </label>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="internal" name="type" value="internal" required>
+                <label class="form-check-label" for="internal">Internal Transfer</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="external" value="external" name="type" required>
+                <label class="form-check-label" for="external">External Transfer</label>
+            </div>
+        </div>
+        
         <div class="col-md-6">
             <label for="src" class="form-label" min="1">Source</label>
             <select class="form-select form-select-sm" name="src" id="src" onchange="show_balance(this)" required> 
@@ -47,14 +89,32 @@ $src_accounts= getAccounts();
                     <option value="<?php se($account["id"]);?>"><?php se($account["account_number"]);?></option>
                 <?php endforeach;?>
             </select>
-            <input type="hidden" for>
             <?php foreach($src_accounts as $key => $account):?>
                     <p hidden id="<?php se($account["id"]);?>">(Current Balance: $<?php se($account["balance"]);?>)</p>
             <?php endforeach;?>
 
         </div>
-        <div class="col">
-            <label for="dest" class="form-label">Destination</label>
+        <div class="col-12 my-3" id="external_div" hidden>
+            <label for="dest" class="form-label">Destination (External)</label>
+            <p>Fill out the information of the recevier in this section</p>
+            <div class="row row-cols-lg-auto g-3">
+                <div class="col-12">
+                    <div class="input-group">
+                        <span class="input-group-text">Last Name</span>
+                        <input type="text" class="form-control" name="ln" required>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group">
+                        <span class="input-group-text">Last 4 digits of bank account number</span>
+                        <input type="text" class="form-control" name="external_an" minlength="4" maxlength="4" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col" id="internal_div" hidden>
+            <label for="dest" class="form-label">Destination (Internal)</label>
             <select class="form-select form-select-sm" name="dest" id="dest" required>
                 <option value=""></option>
                 <?php foreach($src_accounts as $key => $account):?>
@@ -74,13 +134,38 @@ $src_accounts= getAccounts();
             <textarea class="form-control" name="memo" id="memo" rows="2" placeholder="Memo..."></textarea>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>
         </div>
     </form>
 </div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 <script>
+    document.addEventListener("click", show_transfer_div);
+    function show_transfer_div(e){
+        if(e.target.type == "radio"){
+            const internalEle= document.getElementById("internal_div");
+            const externalEle= document.getElementById("external_div");
+            const internalInputs= internalEle.getElementsByTagName("select")[0];
+            const externalInputs= externalEle.getElementsByTagName("input");
+            if(e.target.value == "internal"){
+                internalEle.hidden=false;
+                internalInputs.disabled=false;
+                externalEle.hidden=true;
+                for(let i of externalInputs){
+                    i.disabled=true;
+                }
+            }
+            else if(e.target.value == "external"){
+                externalEle.hidden=false;
+                for(let i of externalInputs){
+                    i.disabled=false;
+                }
+                internalEle.hidden=true;
+                internalInputs.disabled=true;                
+            }
+        }
+    }
     function show_balance(select){
         const aid= select.value;
         const balancesWithId= document.getElementsByTagName("p");
