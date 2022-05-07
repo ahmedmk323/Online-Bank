@@ -96,16 +96,16 @@ function withdraw($id, $amount, $msg= ""){
     }
 }
 
-function transfer($src_acc_id, $dest_acc_id, $amount, $msg= ""){
+function transfer($src_acc_id, $dest_acc_id, $amount, $type="transfer", $msg= ""){
     $db= getDB();
     $query= "INSERT INTO Transactions (account_src,account_dest,balance_change,transaction_type,memo,expected_total) VALUES 
     (:src, :dest, :balance_c,:transcation_type, :msg, :expected_total)"; 
     $stmt=$db->prepare($query);
     $col_ids=array();
     try{
-        $stmt->execute([":src" => $src_acc_id, ":dest" => $dest_acc_id, ":balance_c" => -$amount, ":transcation_type" => "transfer",":msg"=> $msg, ":expected_total" =>0]);
+        $stmt->execute([":src" => $src_acc_id, ":dest" => $dest_acc_id, ":balance_c" => -$amount, ":transcation_type" => $type,":msg"=> $msg, ":expected_total" =>0]);
         array_push($col_ids,$db->lastInsertId());
-        $stmt->execute([":src" => $dest_acc_id, ":dest" => $src_acc_id, ":balance_c" => $amount, ":transcation_type" => "transfer","msg"=> $msg, ":expected_total" =>0]);
+        $stmt->execute([":src" => $dest_acc_id, ":dest" => $src_acc_id, ":balance_c" => $amount, ":transcation_type" => $type,"msg"=> $msg, ":expected_total" =>0]);
         array_push($col_ids,$db->lastInsertId());
         $ids=array($src_acc_id, $dest_acc_id);
 
