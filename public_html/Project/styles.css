@@ -1,5 +1,5 @@
 body{
-    background-color: aquamarine;
+    background-color:rgba(255, 255, 255, 0.836);
 }
 
 nav{
@@ -31,7 +31,7 @@ form{
     background-color: aliceblue;
 }
 
- label{
+ /* label{
     font-family: 'Verdana', 'Arial';
     font-size: large;
 }
@@ -46,7 +46,7 @@ table{
 }
 tr{
     max-width: auto;
-}
+}  */
 thead > tr{
     background-color: white;
 }
@@ -57,7 +57,7 @@ tbody > tr:nth-child(odd){
     background-color: burlywood;
 }
 td, th{
-    padding: 2% 2%;
+    /* padding: 2% 2%; */
     text-align: center;
-    min-width: 80px;
+    /* min-width: 80px; */
 }
