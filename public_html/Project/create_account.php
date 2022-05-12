@@ -52,12 +52,7 @@ if(isset($_POST["submit"])){
 require(__DIR__ . "/../../partials/flash.php");
 ?>
 <?php 
-$db= getDB();
-$stmt=$db->prepare("SELECT SysProps.value FROM SysProps WHERE property = 'APY'");
-$stmt->execute();
-$apy = $stmt -> fetch(PDO::FETCH_ASSOC);
-$apy= floatval($apy["value"]);
-
+$apy= getApy();
 ?>
 <div class="container col-5">
     <h2>Create Account</h2>
