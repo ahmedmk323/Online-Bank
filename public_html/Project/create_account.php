@@ -1,88 +1,52 @@
 <?php
 require_once(__DIR__."/../../partials/nav.php");
+
 if (!is_logged_in()) {
-    flash("You don't have permission to view this page", "warning");
+	flash("You don't have permission to view this page", "warning");
     die(header("Location: login.php"));
 }
-
-function createAcc($type=""){
-    if(isset($_POST["type"]) && isset($_POST["deposit_default"])){
-        $type= $_POST["type"];
-        if ($_POST["deposit_default"] == "yes"){
-            $balance= 5;
-        }
-        else{
-            $balance= $_POST["amount"];
-        }
-    }
-    else{
-        return flash("Missing one or more Entries", "danger");
-    }
-    // Insert account
-    $db= getDB();
-    $query= "INSERT INTO Accounts (account_number,user_id,account_type) VALUES 
-    (:an,:user_id,:account_type)";
-    $id=get_user_id();    
-    try{
-        $stmt=$db->prepare($query);
-        $stmt->execute(
-            [":an" => null,
-             ":user_id" => $id,
-             ":account_type" => $type]
-        );
-        $last_id= $db->lastInsertId();
-        $str='0123456789abcdefghijklmnopqrstuvwxyz';
-        $lpad=substr(str_shuffle($str),0,12);
-        $an= str_pad($last_id,12,$lpad,STR_PAD_LEFT);
-        
-        $query= "UPDATE Accounts SET account_number = :an WHERE id = :id";
-        $stmt=$db->prepare($query);
-        $stmt->execute([":an" => $an , ":id" =>$last_id]);
-        
-        deposit($last_id,$balance);
-        
-        flash("Account created Successfully", "success");
-        die(header("Location: accounts.php"));
-    }
-    catch(PDOException $e){
-        return flash("Error Failed to create the account", "danger");
-    }
+if(isset($_POST["amount"]) && isset($_POST["account_id"])){
+	if($_POST["amount"] < 1){
+		flash("Amount is less than 1", "danger");
+	}
+	else{
+		$amount= $_POST["amount"];
+		$id= $_POST["account_id"];
+		try{
+			deposit($id, $amount, $_POST["memo"]);
+			flash("Amount deposited successfully, Check the Transaction page","success");
+		}
+		catch(PDOException $e){
+			var_export($e);
+		}
+	}
 }
-createAcc();
 require(__DIR__ . "/../../partials/flash.php");
 ?>
-<form method="POST" >
-    <label for="type">Type</label>
-    <select name="type" id="1" required>
-        <option value=""></option>
-        <option value="checking">Checking</option>
-        <option value="savings">Savings</option>
-    </select>
-    <p>To open new account the minimum deposit amount is $5.</p>
-    <p>Would you like to deposit $5 ?</p>
-    <input type="radio" id="deposit_1" name="deposit_default" value="yes" required>
-    <label for="deposit_1">Yes</label>
-    <input type="radio" id="deposit_2" name="deposit_default" value="no" required>
-    <label for="deposit_2">No</label><br>
-    <label for="amount" id="amount">Enter amount in dollars: </label>
-    <input type="number" id="amount" name="amount" required disabled min="5"><br>
-    
-    <input type="submit">
-</form>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    $(
-        ()=>{
-            $("input[type=radio]#deposit_2").click(function(){
-                $("input[type=number]#amount").prop("disabled",false);
-                $("input[type=number]#amount").prop("required",true);
-            });
-
-            $("input[type=radio]#deposit_1").click(function(){
-                $("input[type=number]#amount").prop("disabled",true);
-                $("input[type=number]#amount").prop("required",false);
-            });
-            
-        }
-    );
-</script>
+<div class="container col-5">
+	<h2>Deposit</h2>
+	<form class="p-3" method="POST">
+		<div class="mb-3">
+			<label for="account_id" class="form-label">Select which account would you like to deposit to: </label>
+			<select name="account_id" id="account_id" class="form-select" required>
+				<option value=""></option>
+				<?php $results= getAccounts();?>
+				<?php foreach($results as $key => $value):?>
+					<option value="<?php se($value["id"]);?>"><?php se($value["account_number"]);?></option>
+				<?php endforeach;?>		
+			</select>
+		</div>
+		<label for="amount"> Amount to Depoist (in dollars): </label>
+		<div class="mb-3 input-group">
+			<span class="input-group-text">$</span>
+			<input type="number" class= "form-control" id="amount" name="amount" required min="1">
+		</div>
+		<div class="mb-3">
+			<label for="memo" class="form-label">Memo:</label>
+			<textarea class="form-control" name="memo" id="memo" rows="2" placeholder="Memo..."></textarea>			
+		</div>
+		<div class="d-flex justify-content-center">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</form>	
+</div>

@@ -8,10 +8,12 @@ if (!is_logged_in()) {
 if (isset($_POST["save"])) {
     $email = se($_POST, "email", null, false);
     $username = se($_POST, "username", null, false);
+    $fn = se($_POST, "fn", null, false);
+    $ln = se($_POST, "ln", null, false);
 
-    $params = [":email" => $email, ":username" => $username, ":id" => get_user_id()];
+    $params = [":email" => $email, ":username" => $username, ":id" => get_user_id(), ":fn" => $fn, ":ln" => $ln];
     $db = getDB();
-    $stmt = $db->prepare("UPDATE Users set email = :email, username = :username where id = :id");
+    $stmt = $db->prepare("UPDATE Users set email = :email, username = :username, first_name = :fn, last_name = :ln where id = :id");
     try {
         $stmt->execute($params);
         flash("Profile saved", "success");
@@ -31,7 +33,7 @@ if (isset($_POST["save"])) {
         }
     }
     //select fresh data from table
-    $stmt = $db->prepare("SELECT id, email, username from Users where id = :id LIMIT 1");
+    $stmt = $db->prepare("SELECT id, email, username, first_name, last_name from Users where id = :id LIMIT 1");
     try {
         $stmt->execute([":id" => get_user_id()]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -39,6 +41,8 @@ if (isset($_POST["save"])) {
             //$_SESSION["user"] = $user;
             $_SESSION["user"]["email"] = $user["email"];
             $_SESSION["user"]["username"] = $user["username"];
+            $_SESSION["user"]["first_name"] = $user["first_name"];
+            $_SESSION["user"]["last_name"] = $user["last_name"];
         } else {
             flash("User doesn't exist", "danger");
         }
@@ -86,32 +90,48 @@ if (isset($_POST["save"])) {
 <?php
 $email = get_user_email();
 $username = get_username();
+$fn= get_user_first_name();
+$ln= get_user_last_name();
 ?>
-<form method="POST" onsubmit="return validate(this);">
-    <div class="mb-3">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" value="<?php se($email); ?>" />
-    </div>
-    <div class="mb-3">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" value="<?php se($username); ?>" />
-    </div>
-    <!-- DO NOT PRELOAD PASSWORD -->
-    <div>Password Reset</div>
-    <div class="mb-3">
-        <label for="cp">Current Password</label>
-        <input type="password" name="currentPassword" id="cp" />
-    </div>
-    <div class="mb-3">
-        <label for="np">New Password</label>
-        <input type="password" name="newPassword" id="np" />
-    </div>
-    <div class="mb-3">
-        <label for="conp">Confirm Password</label>
-        <input type="password" name="confirmPassword" id="conp" />
-    </div>
-    <input type="submit" value="Update Profile" name="save" />
-</form>
+<div class="container">
+    <form method="POST" class="p-3" onsubmit="return validate(this);">
+        <div class="row g-2">
+            <div class="col mb-3">
+                <label for="fn" class="form-label">First name</label>
+                <input type="text" class="form-control" id="fn" name="fn" value="<?php se($fn); ?>">
+            </div>
+            <div class="col">
+                <label for="ln" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="ln" name="ln" value="<?php se($ln); ?>">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="email" value="<?php se($email); ?>" />
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" name="username" id="username" value="<?php se($username); ?>" />
+        </div>
+        <!-- DO NOT PRELOAD PASSWORD -->
+        <div>Password Reset</div>
+        <div class="mb-3">
+            <label for="cp" class="form-label">Current Password</label>
+            <input type="password" class="form-control" name="currentPassword" id="cp" />
+        </div>
+        <div class="mb-3">
+            <label for="np" class="form-label">New Password</label>
+            <input type="password" class="form-control" name="newPassword" id="np" />
+        </div>
+        <div class="mb-3">
+            <label for="conp" class="form-label">Confirm Password</label>
+            <input type="password"class="form-control"  name="confirmPassword" id="conp" />
+        </div>
+        <div class="row justify-content-center">
+            <input type="submit" class="btn btn-info" value="Update Profile" name="save" />
+        </div>
+    </form>
+</div>
 
 <script>
     function validate(form) {
@@ -160,6 +180,7 @@ $username = get_username();
         return isValid;
     }
 </script>
+
 <?php
 require_once(__DIR__ . "/../../partials/flash.php");
 ?>
