@@ -5,15 +5,20 @@ if (!is_logged_in()) {
 }
 ?>
 <?php
-if (isset($_POST["save"])) {
+
+$user_id= se($_GET,"id",get_user_id(),false);
+$isMe= $user_id == get_user_id();
+$isEdit= isset($_GET["edit"]);
+if (isset($_POST["save"]) && $isMe && $isEdit) {
     $email = se($_POST, "email", null, false);
     $username = se($_POST, "username", null, false);
     $fn = se($_POST, "fn", null, false);
     $ln = se($_POST, "ln", null, false);
+    $visibility= isset($_POST["vis"]) ? 1 : 0;
 
-    $params = [":email" => $email, ":username" => $username, ":id" => get_user_id(), ":fn" => $fn, ":ln" => $ln];
+    $params = [":email" => $email, ":username" => $username, ":id" => get_user_id(), ":fn" => $fn, ":ln" => $ln, ":visibility" => $visibility];
     $db = getDB();
-    $stmt = $db->prepare("UPDATE Users set email = :email, username = :username, first_name = :fn, last_name = :ln where id = :id");
+    $stmt = $db->prepare("UPDATE Users set email = :email, username = :username, first_name = :fn, last_name = :ln, visibility = :visibility where id = :id");
     try {
         $stmt->execute($params);
         flash("Profile saved", "success");
@@ -32,25 +37,7 @@ if (isset($_POST["save"])) {
             echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
         }
     }
-    //select fresh data from table
-    $stmt = $db->prepare("SELECT id, email, username, first_name, last_name from Users where id = :id LIMIT 1");
-    try {
-        $stmt->execute([":id" => get_user_id()]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user) {
-            //$_SESSION["user"] = $user;
-            $_SESSION["user"]["email"] = $user["email"];
-            $_SESSION["user"]["username"] = $user["username"];
-            $_SESSION["user"]["first_name"] = $user["first_name"];
-            $_SESSION["user"]["last_name"] = $user["last_name"];
-        } else {
-            flash("User doesn't exist", "danger");
-        }
-    } catch (Exception $e) {
-        flash("An unexpected error occurred, please try again", "danger");
-        //echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
-    }
-
+    
 
     //check/update password
     $current_password = se($_POST, "currentPassword", null, false);
@@ -85,52 +72,103 @@ if (isset($_POST["save"])) {
         }
     }
 }
+//select fresh data from table
+$db = getDB();
+$stmt = $db->prepare("SELECT id, email, username, first_name, last_name, created, visibility from Users where id = :id LIMIT 1");
+$isVisible= false;
+try {
+    $stmt->execute([":id" => $user_id]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($user) {
+        if ($isMe){
+            //$_SESSION["user"] = $user;
+            $_SESSION["user"]["email"] = $user["email"];
+            $_SESSION["user"]["username"] = $user["username"];
+            $_SESSION["user"]["first_name"] = $user["first_name"];
+            $_SESSION["user"]["last_name"] = $user["last_name"];
+        }
+        if(se($user,"visibility",0,false) > 0){
+            $isVisible = 1;
+        }
+        $email = get_user_email();
+        $username = get_username();
+        $joined= se($user,"created", "", false);
+        $fn= se($user,"first_name","",false);
+        $ln= se($user,"last_name","",false);
+        error_log("Query data: " . var_export($user, true));
+    } else {
+        flash("User doesn't exist", "danger");
+    }
+} catch (Exception $e) {
+    flash("An unexpected error occurred, please try again", "danger");
+    //echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+}
 ?>
 
-<?php
-$email = get_user_email();
-$username = get_username();
-$fn= get_user_first_name();
-$ln= get_user_last_name();
-?>
 <div class="container">
-    <form method="POST" class="p-3" onsubmit="return validate(this);">
-        <div class="row g-2">
-            <div class="col mb-3">
-                <label for="fn" class="form-label">First name</label>
-                <input type="text" class="form-control" id="fn" name="fn" value="<?php se($fn); ?>">
+    <?php if($isMe && $isEdit): ?>
+        <?php if ($isMe):?>
+            <a href="<?php echo get_url("profile.php")?>">View Profile</a>
+        <?php endif;?>
+        <form method="POST" class="p-3" onsubmit="return validate(this);">
+            <div class="row g-2">
+                <div class="col mb-3">
+                    <label for="fn" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="fn" name="fn" value="<?php se($fn); ?>">
+                </div>
+                <div class="col">
+                    <label for="ln" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="ln" name="ln" value="<?php se($ln); ?>">
+                </div>
             </div>
-            <div class="col">
-                <label for="ln" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="ln" name="ln" value="<?php se($ln); ?>">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="email" value="<?php se($email); ?>" />
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" id="email" value="<?php se($email); ?>" />
-        </div>
-        <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" name="username" id="username" value="<?php se($username); ?>" />
-        </div>
-        <!-- DO NOT PRELOAD PASSWORD -->
-        <div>Password Reset</div>
-        <div class="mb-3">
-            <label for="cp" class="form-label">Current Password</label>
-            <input type="password" class="form-control" name="currentPassword" id="cp" />
-        </div>
-        <div class="mb-3">
-            <label for="np" class="form-label">New Password</label>
-            <input type="password" class="form-control" name="newPassword" id="np" />
-        </div>
-        <div class="mb-3">
-            <label for="conp" class="form-label">Confirm Password</label>
-            <input type="password"class="form-control"  name="confirmPassword" id="conp" />
-        </div>
-        <div class="row justify-content-center">
-            <input type="submit" class="btn btn-info" value="Update Profile" name="save" />
-        </div>
-    </form>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" id="username" value="<?php se($username); ?>" />
+            </div>
+            <!-- DO NOT PRELOAD PASSWORD -->
+            <div>Password Reset</div>
+            <div class="mb-3">
+                <label for="cp" class="form-label">Current Password</label>
+                <input type="password" class="form-control" name="currentPassword" id="cp" />
+            </div>
+            <div class="mb-3">
+                <label for="np" class="form-label">New Password</label>
+                <input type="password" class="form-control" name="newPassword" id="np" />
+            </div>
+            <div class="mb-3">
+                <label for="conp" class="form-label">Confirm Password</label>
+                <input type="password"class="form-control"  name="confirmPassword" id="conp" />
+            </div>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="vis" name="vis"
+                    <?php if($isVisible){
+                        echo "checked";
+                    }
+                    ?>>
+                <label class="form-check-label" for="vis">Toggle Visibility</label>
+            </div>
+            <div class="row justify-content-center">
+                <input type="submit" class="btn btn-info" value="Update Profile" name="save" />
+            </div>
+        </form>
+    
+    <?php else: ?>
+        <?php if($isMe): ?>
+            <a href="?edit">Edit Profile</a>
+        <?php endif;?>
+        <?php if($isMe || $isVisible): ?>
+            <h2><?php echo($fn." ".$ln);?></h2>
+            <h3><?php echo("Date Joined: ".$joined);?></h3>
+        <?php else: 
+            flash("Profile is private", "warning");
+            die(header("Location: home.php"));
+        endif;?>
+            
+    <?php endif; ?>
 </div>
 
 <script>
