@@ -9,7 +9,7 @@ if (!is_logged_in()) {
 if(isset($_GET["account_id"])){
     $id= $_GET["account_id"];
     $t_query= "SELECT COUNT(1) as `total` FROM Transactions WHERE 1";
-    $d_query="SELECT t2.account_number AS src_acc,
+    $d_query="SELECT t2.user_id as src_id, t3.user_id as dest_id, t2.account_number AS src_acc,
     t3.account_number AS dest_acc, Transactions.transaction_type, Transactions.balance_change, Transactions.expected_total, Transactions.created, Transactions.memo
     FROM (Transactions
     INNER JOIN Accounts AS t2 ON Transactions.account_src= t2.id 
@@ -136,8 +136,17 @@ if(isset($_GET["account_id"])){
                 <tbody>
                 <?php foreach($results_transactions as $key => $value): ?>
                     <tr scope="row"> 
-                        <td><?php echo $value["src_acc"];?></td>
-                        <td><?php echo$value["dest_acc"];?></td>
+                        <td><?php echo$value["src_acc"]; ?></td>
+                        <td><?php
+                        if($value["dest_id"] !== -1){
+                            $user_id= se($value,"dest_id","",false);
+                            $username= se($value,"dest_acc","",false);
+                            include(__DIR__ ."/../../partials/profile_link.php");
+                        }
+                        else{
+                            echo $value["dest_acc"];
+                        }
+                        ?></td>
                         <td><?php echo$value["transaction_type"];?></td>
                         <td>$<?php echo$value["balance_change"];?></td>
                         <td>$<?php echo$value["expected_total"];?></td>
