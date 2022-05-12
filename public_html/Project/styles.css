@@ -1,0 +1,63 @@
+body{
+    background-color:rgba(255, 255, 255, 0.836);
+}
+
+nav{
+    background-color: bisque;
+    border-radius: 5px;
+    
+}
+
+ul{
+    text-align: center;
+}
+li{
+    display: inline-block;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 10px;
+    border: 10px;   
+}
+
+li > a{
+    text-decoration-line: none;
+    color: black;
+}
+ 
+li > a:hover{
+    color:blue;
+} 
+
+form{
+    background-color: aliceblue;
+}
+
+ /* label{
+    font-family: 'Verdana', 'Arial';
+    font-size: large;
+}
+
+
+table{
+    text-align: center;
+    font-size: large;
+    border-collapse: collapse;
+    margin: 25px 0;
+    
+}
+tr{
+    max-width: auto;
+}  */
+thead > tr{
+    background-color: white;
+}
+tbody > tr:nth-child(even){
+    background-color: white;
+}
+tbody > tr:nth-child(odd){
+    background-color: burlywood;
+}
+td, th{
+    /* padding: 2% 2%; */
+    text-align: center;
+    /* min-width: 80px; */
+}

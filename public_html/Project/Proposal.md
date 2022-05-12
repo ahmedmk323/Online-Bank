@@ -1,4 +1,4 @@
-# Project Name: Simple Bank
+****# Project Name: Simple Bank
 ## Project Summary: This project will create a bank simulation for users. They’ll be able to have various accounts, do standard bank functions like deposit, withdraw, internal (user’s accounts)/external(other user’s accounts) transfers, and creating/closing 
 ## Github Link: [https://github.com/ahmedmk323/IT202-002/tree/prod/public_html/Project](https://github.com/ahmedmk323/IT202-002/tree/prod/public_html/Project)
 ## Project Board Link: https://github.com/ahmedmk323/IT202-002/projects/1
@@ -17,28 +17,79 @@
 ### Proposal Checklist and Evidence
 
 - Milestone 1
-    - [ ] \(mm/dd/yyyy of completion) User will be able to register a new account
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) User will be able to login to their account (given they enter the correct credentials)
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Feature Title User will be able to logout
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Basic security rules implemented
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Basic Roles implemented
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Site should have basic styles/theme applied; everything should be styled
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) Any output messages/errors should be “user friendly”
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) User will be able to see their profile
-        -  Link to related .md file: [Link Name](link url)
-    - [ ] \(mm/dd/yyyy of completion) User will be able to edit their profile
-        -  Link to related .md file: [Link Name](link url)
+    - [x] \(02/23/2022) User will be able to register a new account
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Register](https://amm256-prod.herokuapp.com/Project/register.php)
+    - [x] \(02/23/2022) User will be able to login to their account (given they enter the correct credentials)
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Login](https://amm256-prod.herokuapp.com/Project/login.php)
+    - [x] \(02/23/2022) Feature Title User will be able to logout
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Logout](https://amm256-prod.herokuapp.com/Project/logout.php)
+    - [x] \(04/02/2022) Basic security rules implemented
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+    - [x] \(04/03/2022) Basic Roles implemented
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Create_Role](https://amm256-prod.herokuapp.com/Project/admin/create_role.php)  
+        -  [Assign_Roles](https://amm256-prod.herokuapp.com/Project/admin/assign_roles.php)  
+        -  [List_Role](https://amm256-prod.herokuapp.com/Project/admin/list_roles.php)  
+    - [x] \(04/04/2022) Site should have basic styles/theme applied; everything should be styled
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Home](https://amm256-prod.herokuapp.com/Project/home.php)
+        -  [Styles](https://amm256-prod.herokuapp.com/Project/styles.css)
+    - [x] \(03/13/2022) Any output messages/errors should be “user friendly”
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Logout](https://amm256-prod.herokuapp.com/Project/logout.php)
+    - [x] \(04/02/2022) User will be able to see their profile
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+    - [x] \(04/02/2022) User will be able to edit their profile
+        -  [Milestone 1](https://github.com/ahmedmk323/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+        -  [Profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+
 - Milestone 2
-  - (duplicate template here for Milestone 1 features)
+  - [x] \(04/18/2022) Create the Accounts table (id, account_number [unique, always 12 characters], user_id, balance (default 0), account_type, created, modified)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Account_Table](https://amm256-prod.herokuapp.com/Project/sql/006_create_table_accounts.sql)
+  - [x] \(04/18/2022) Project Setup Steps
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [system_user](https://amm256-prod.herokuapp.com/Project/sql/008_insert_sys_user.sql)
+    -  [world_account](https://amm256-prod.herokuapp.com/Project/sql/009_insert_world_account.sql)
+  - [x] \(04/18/2022) Create the Transactions table (see reference at end of document)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Transactions_Table](https://amm256-prod.herokuapp.com/Project/sql/007_create_table_transactions.sql)
+  - [x] \(04/18/2022) Dashboard page
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Dashboard](https://amm256-prod.herokuapp.com/Project/profile.php)
+  - [x] \(04/20/2022) User will be able to create a checking account
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [create](https://amm256-prod.herokuapp.com/Project/create_account.php)
+  - [x] \(04/23/2022) User will be able to list their accounts
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [List Accounts](https://amm256-prod.herokuapp.com/Project/accounts.php)
+  - [x] \(04/23/2022) User will be able to click an account for more information (a.k.a Transaction History page)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Transaction History](https://amm256-prod.herokuapp.com/Project/transactions.php)
+  - [x] \(04/23/2022) User will be able to deposit/withdraw from their account(s)
+    -  [Milestone2](https://github.com/ahmedmk323/IT202-002/blob/Milestone2/public_html/Project/milestone2.md)
+    -  [Deposit](https://amm256-prod.herokuapp.com/Project/deposit.php)
+    -  [Withdraw](https://amm256-prod.herokuapp.com/Project/withdraw.php)
+
 - Milestone 3
-  - (duplicate template here for Milestone 1 features)
+  - [x] \(05/01/2022) User will be able to transfer between their accounts
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [transfers](https://amm256-prod.herokuapp.com/Project/transfers.php)
+  - [x] \(05/07/2022) Transaction History page
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [transactions](https://amm256-prod.herokuapp.com/Project/transactions.php)
+  - [x] \(05/02/2022) User’s profile page should record/show First and Last name
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+  - [x] \(05/07/2022) User will be able to transfer funds to another user’s account
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [transfers](https://amm256-prod.herokuapp.com/Project/transfers.php)
+
 - Milestone 4
   - (duplicate template here for Milestone 1 features)
   - 
