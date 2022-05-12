@@ -86,7 +86,9 @@ $src_accounts= getAccounts();
             <select class="form-select form-select-sm" name="src" id="src" onchange="show_balance(this)" required> 
                 <option value=""></option>
                 <?php foreach($src_accounts as $key => $account):?>
-                    <option value="<?php se($account["id"]);?>"><?php se($account["account_number"]);?></option>
+                    <?php if($account["account_type"] !== "loan"):?>
+                        <option value="<?php se($account["id"]);?>"><?php se($account["account_number"]);?></option>
+                    <?php endif;?>
                 <?php endforeach;?>
             </select>
             <?php foreach($src_accounts as $key => $account):?>
