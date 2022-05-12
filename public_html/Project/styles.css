@@ -1,5 +1,5 @@
-html{
-    background-color: aquamarine;
+body{
+    background-color:rgba(255, 255, 255, 0.836);
 }
 
 nav{
@@ -29,36 +29,13 @@ li > a:hover{
 
 form{
     background-color: aliceblue;
-    border-radius: 5px;
-}
-input{
-    width: 100%;
-    height: 30px;   
 }
 
- label{
+ /* label{
     font-family: 'Verdana', 'Arial';
     font-size: large;
 }
 
- input[type=submit]{
-    font-family: 'Arial';
-    width: 10%;
-    height: 5%;
-    color: green;
-    font-size: medium;
-    border-radius: 5px;
-}
-
-input[type=submit]:hover{
-    background-color: darkgrey;
-    color: lightgreen;
-}
-
-input[value=Toggle]{
-    width: fit-content;
-    height: fit-content;
-}
 
 table{
     text-align: center;
@@ -69,18 +46,18 @@ table{
 }
 tr{
     max-width: auto;
-}
-thead + tr{
+}  */
+thead > tr{
     background-color: white;
 }
-tr:nth-child(even){
+tbody > tr:nth-child(even){
     background-color: white;
 }
-tr:nth-child(odd){
+tbody > tr:nth-child(odd){
     background-color: burlywood;
 }
 td, th{
-    padding: 2% 2%;
+    /* padding: 2% 2%; */
     text-align: center;
-    min-width: 80px;
+    /* min-width: 80px; */
 }

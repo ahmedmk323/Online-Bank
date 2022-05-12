@@ -1,4 +1,4 @@
-# Project Name: Simple Bank
+****# Project Name: Simple Bank
 ## Project Summary: This project will create a bank simulation for users. They’ll be able to have various accounts, do standard bank functions like deposit, withdraw, internal (user’s accounts)/external(other user’s accounts) transfers, and creating/closing 
 ## Github Link: [https://github.com/ahmedmk323/IT202-002/tree/prod/public_html/Project](https://github.com/ahmedmk323/IT202-002/tree/prod/public_html/Project)
 ## Project Board Link: https://github.com/ahmedmk323/IT202-002/projects/1
@@ -77,7 +77,19 @@
     -  [Withdraw](https://amm256-prod.herokuapp.com/Project/withdraw.php)
 
 - Milestone 3
-  - (duplicate template here for Milestone 1 features)
+  - [x] \(05/01/2022) User will be able to transfer between their accounts
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [transfers](https://amm256-prod.herokuapp.com/Project/transfers.php)
+  - [x] \(05/07/2022) Transaction History page
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [transactions](https://amm256-prod.herokuapp.com/Project/transactions.php)
+  - [x] \(05/02/2022) User’s profile page should record/show First and Last name
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+  - [x] \(05/07/2022) User will be able to transfer funds to another user’s account
+    -  [Milestone3](https://github.com/ahmedmk323/IT202-002/blob/Milestone3/public_html/Project/milestone3.md)
+    -  [transfers](https://amm256-prod.herokuapp.com/Project/transfers.php)
+
 - Milestone 4
   - (duplicate template here for Milestone 1 features)
   - 

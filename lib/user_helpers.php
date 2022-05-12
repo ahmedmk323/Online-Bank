@@ -46,3 +46,17 @@ function get_user_id()
     }
     return false;
 }
+
+/* Returns an array of first and last name [first_name, las_name]*/
+function get_user_first_name(){
+    if(is_logged_in()){
+        return se($_SESSION["user"],"first_name", "",false);
+    }
+    return "";
+}
+function get_user_last_name(){
+    if(is_logged_in()){
+        return se($_SESSION["user"],"last_name", "",false);
+    }
+    return "";
+}
