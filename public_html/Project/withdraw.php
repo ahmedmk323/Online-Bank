@@ -42,7 +42,9 @@ require(__DIR__ . "/../../partials/flash.php");
 				<option value=""></option>
 				<?php $results= getAccounts();?>
 				<?php foreach($results as $key => $value):?>
-					<option value="<?php se($value["id"]);?>"><?php se($value["account_number"]);?></option>
+                    <?php if($value["account_type"] !== "loan"):?>
+						<option value="<?php se($value["id"]);?>"><?php se($value["account_number"]);?></option>
+					<?php endif;?>
 				<?php endforeach;?>		
 			</select>
 		</div>
