@@ -142,7 +142,7 @@ function getAccounts($aid=0){
     }
     else{
         $user_id= get_user_id();
-        $query= "SELECT * FROM Accounts WHERE user_id = :id ";
+        $query= "SELECT * FROM Accounts WHERE user_id = :id AND isActive = 1";
         $stmt= $db->prepare($query);
         $stmt->bindParam(":id", $user_id, PDO::PARAM_INT);
     }
