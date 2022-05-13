@@ -91,8 +91,23 @@
     -  [transfers](https://amm256-prod.herokuapp.com/Project/transfers.php)
 
 - Milestone 4
-  - (duplicate template here for Milestone 1 features)
-  - 
+  - [x] \(05/11/2022) User can set their profile to be public or private (will need another column in Users table)
+    - [Milestone4](https://github.com/ahmedmk323/IT202-002/blob/Milestone4/public_html/Project/milestone4.md)
+    -  [profile](https://amm256-prod.herokuapp.com/Project/profile.php)
+  - [x] \(05/11/2022) User will be able open a savings account
+    -  [Milestone4](https://github.com/ahmedmk323/IT202-002/blob/Milestone4/public_html/Project/milestone4.md)
+    -  [create savings](https://amm256-prod.herokuapp.com/Project/create_account.php)
+  - [x] \(05/12/2022) User will be able to take out a loan
+    -  [Milestone4](https://github.com/ahmedmk323/IT202-002/blob/Milestone4/public_html/Project/milestone4.md)
+    -  [loan](https://amm256-prod.herokuapp.com/Project/loan.php)
+  - [x] \(05/12/2022) Listing accounts and/or viewing Account Details should show any applicable APY or “-” if none is set for the particular account
+    -  [Milestone4](https://github.com/ahmedmk323/IT202-002/blob/Milestone4/public_html/Project/milestone4.md)
+    -  [Accounts](https://amm256-prod.herokuapp.com/Project/accounts.php)
+  - [x] \(05/12/2022) User will be able to close an account
+    -  [Milestone4](https://github.com/ahmedmk323/IT202-002/blob/Milestone4/public_html/Project/milestone4.md)
+    -  [Accounts](https://amm256-prod.herokuapp.com/Project/accounts.php)
+  - [ ] \(mm/dd/yyyy of completion) Admin role (leave this section for last)
+    -  Link to related .md file: [Link Name](link url)
 ### Intructions
 #### Don't delete this
 1. Pick one project type
