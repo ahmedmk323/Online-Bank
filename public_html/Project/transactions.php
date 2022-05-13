@@ -9,7 +9,7 @@ if (!is_logged_in()) {
 if(isset($_GET["account_id"])){
     $id= $_GET["account_id"];
     $t_query= "SELECT COUNT(1) as `total` FROM Transactions WHERE 1";
-    $d_query="SELECT t2.account_number AS src_acc,
+    $d_query="SELECT t2.user_id as src_id, t3.user_id as dest_id, t2.account_number AS src_acc,
     t3.account_number AS dest_acc, Transactions.transaction_type, Transactions.balance_change, Transactions.expected_total, Transactions.created, Transactions.memo
     FROM (Transactions
     INNER JOIN Accounts AS t2 ON Transactions.account_src= t2.id 
@@ -95,7 +95,8 @@ if(isset($_GET["account_id"])){
         
 
 <?php if(isset($results_transactions)): ?>
-    <?php $account_info= getAccounts($_GET["account_id"]); ?>
+    <?php $account_info= getAccounts($_GET["account_id"]); 
+    $apy= getApy();?>
     <div class="row mb-3">
         <table class="table table-striped">
             <p class="h2 p-0">Account Info</p>
@@ -103,6 +104,7 @@ if(isset($_GET["account_id"])){
                 <th scope="col">Account number</th>
                 <th scope="col">Type</th>
                 <th scope="col">Balance</th>
+                <th scope="col">APY</th>
                 <th scope="col">Opened</th>
                 <th scope="col">Modified</th>
             </thead>
@@ -110,7 +112,17 @@ if(isset($_GET["account_id"])){
                 <tr scope="row">
                     <td> <?php echo $account_info[0]["account_number"];?></td>
                     <td> <?php echo $account_info[0]["account_type"];?></td>
-                    <td> <?php echo $account_info[0]["balance"];?></td>
+                    <td> <?php 
+                     if($account_info[0]["account_type"] === "loan"){
+                        $balance= trim(strval($account_info[0]["balance"]),'-');
+                        echo $balance; 
+                    }
+                    else
+                        echo $account_info[0]["balance"];?></td>
+                    <td> <?php 
+                    if ($account_info[0]["account_type"] === "savings" || $account_info[0]["account_type"] === "loan"){
+                        echo ($apy * 100) . "%";
+                    } else{ echo "-"; }?></td>
                     <td> <?php echo $account_info[0]["created"];?></td>
                     <td> <?php echo $account_info[0]["modified"];?></td>
                 </tr>
@@ -136,10 +148,29 @@ if(isset($_GET["account_id"])){
                 <tbody>
                 <?php foreach($results_transactions as $key => $value): ?>
                     <tr scope="row"> 
-                        <td><?php echo $value["src_acc"];?></td>
-                        <td><?php echo$value["dest_acc"];?></td>
+                        <td><?php echo$value["src_acc"]; ?></td>
+                        <td><?php
+                        if($value["dest_id"] !== -1){
+                            $user_id= se($value,"dest_id","",false);
+                            $username= se($value,"dest_acc","",false);
+                            include(__DIR__ ."/../../partials/profile_link.php");
+                        }
+                        else{
+                            echo $value["dest_acc"];
+                        }
+                        ?></td>
                         <td><?php echo$value["transaction_type"];?></td>
-                        <td>$<?php echo$value["balance_change"];?></td>
+                        <td>
+                            <span id="<?php echo ($value["balance_change"]) > 0 ? "positive":"negative";?>">
+                            <?php 
+                            if($value["balance_change"] > 0){
+                                echo "+$". $value["balance_change"];
+                            } 
+                            elseif($value["balance_change"] < 0){
+                                $change= trim(strval($value["balance_change"]),'-');
+                                echo "-$". $change; 
+                            }?>
+                            </span> </td>
                         <td>$<?php echo$value["expected_total"];?></td>
                         <td><?php echo$value["memo"];?></td>
                         <td><?php echo$value["created"];?></td>
@@ -159,3 +190,12 @@ if(isset($_GET["account_id"])){
 <?php include(__DIR__."/../../partials/pagination.php");?>
 
 <?php require_once(__DIR__."/../../partials/flash.php");?>
+
+<style>
+    span#positive{
+        color: green;
+    }
+    span#negative{
+        color: red;
+    }
+</style>

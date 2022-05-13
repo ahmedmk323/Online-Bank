@@ -22,6 +22,9 @@ require(__DIR__ . "/duplicate_user_details.php");
 require(__DIR__ . "/reset_session.php");
 
 require(__DIR__ . "/get_url.php");
+/** 
+ * Takes in account id and amount and memo(optional). Deposits the ammount to the that account id. 
+ */
 function deposit($id, $amount, $msg= ""){
     $db= getDB();
     $query= "INSERT INTO Transactions (account_src,account_dest,balance_change,transaction_type,memo,expected_total) VALUES 
@@ -139,7 +142,7 @@ function getAccounts($aid=0){
     }
     else{
         $user_id= get_user_id();
-        $query= "SELECT * FROM Accounts WHERE user_id = :id LIMIT 5";
+        $query= "SELECT * FROM Accounts WHERE user_id = :id AND isActive = 1";
         $stmt= $db->prepare($query);
         $stmt->bindParam(":id", $user_id, PDO::PARAM_INT);
     }
@@ -167,6 +170,14 @@ function inquiryBalance($id){
         var_export($e);
     }
     return $result;
+}
+
+function getApy(){
+    $db= getDB();
+    $stmt=$db->prepare("SELECT SysProps.value FROM SysProps WHERE property = 'APY'");
+    $stmt->execute();
+    $apy = $stmt -> fetch(PDO::FETCH_ASSOC);
+    return floatval($apy["value"]);
 }
 //paginate
 require(__DIR__. "/paginate.php");
