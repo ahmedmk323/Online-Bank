@@ -1,8 +1,8 @@
 <?php
 require(__DIR__ . "/../../partials/nav.php");
 ?>
-<div class="container position-absolute top-50 start-50 translate-middle d-flex justify-content-center h-50 w-25 ">
-    <form class="p-3 rounded-2" onsubmit="return validate(this)" method="POST">
+<div class="container mt-5">
+    <form class="p-3 rounded-2" onsubmit="return validate(this)" method="POST" style="max-width: 250px; margin:auto">
         <div class="mb-3">
             <label for="email" class="form-label">Email/Username</label>
             <input type="text" class="form-control" name="email" />
@@ -11,7 +11,9 @@ require(__DIR__ . "/../../partials/nav.php");
             <label for="pw" class="form-label">Password</label>
             <input type="password" class="form-control" id="pw" name="password"/>
         </div>
-        <input type="submit" class= "btn btn-primary" value="Login" />
+        <div class="container text-center">
+            <input type="submit" class= "btn btn-primary" value="Login" />
+        </div>
     </form>
    
     
