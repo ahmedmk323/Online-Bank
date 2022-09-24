@@ -94,6 +94,7 @@ $fn= get_user_first_name();
 $ln= get_user_last_name();
 ?>
 <div class="container">
+    <h2>Profile</h2>
     <form method="POST" class="p-3" onsubmit="return validate(this);">
         <div class="row g-2">
             <div class="col mb-3">
