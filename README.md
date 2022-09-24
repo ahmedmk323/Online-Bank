@@ -1,9 +1,18 @@
-# Heroku Setup
+# Online Bank
+Online bank is a web app that employs the fundamental operations a real bank offers to its users.
 
-- 08/30/2021 removed .htaccess and updated Procfile to use public_html as docroot
-- Profile tells Heroku how to deploy
-- Composer.json mentions what libraries will be used 
-- public_html contains all public facing content
-- partials will be templates/partial pages that will NOT be accessed directly (still can reference via code)
-- lib will be custom functions/libraries/etc that will NOT be accessed directly (still can be referenced via code)
-- All work will be subfolders inside public_html (for the most part), lib will contain reusable functionality, partials will contain reusable templates, nothing else should change.
+## Features
+- Open a single or multiple accounts (Savings and/or Checking).
+- Deposit.
+- Withdraw.
+- Transfer between owned accounts or externally.
+- Take out a loan.
+- Admin control.
+- Profile control to adjust your preferences.
+
+## How does it work?
+1. Create an account by clicking on the register tab and filling out the form.
+2. Login and navigate through dashboard tab to access the banking features. 🙂
+ 
+## Link
+### [Online-Bank](https://amm256-dev.herokuapp.com/Project/login.php)
